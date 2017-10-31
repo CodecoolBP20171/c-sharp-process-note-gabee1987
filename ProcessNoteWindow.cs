@@ -22,18 +22,52 @@ namespace process_note
 
         private void loadProcesses()
         {
-            Process[] localAll = Process.GetProcesses();
 
-            processGrid.ColumnCount = 3;
+            Process[] localAll = null;
+            try
+            {
+                localAll = Process.GetProcesses();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Application.Exit();
+                return;
+            }
+
+            int threadscount = 0;
+
+            processGrid.ColumnCount = 7;
             processGrid.Columns[0].Name = "Process ID";
             processGrid.Columns[1].Name = "Process Name";
-            processGrid.Columns[2].Name = "Memory usage";
+            processGrid.Columns[2].Name = "Memory Usage";
+            processGrid.Columns[3].Name = "Peak Memory Usage";
+            processGrid.Columns[4].Name = "Process Start Time";
+            processGrid.Columns[5].Name = "Process Time";
+            processGrid.Columns[6].Name = "Threads";
+
+
+
+
 
 
             foreach (var process in localAll)
             {
-                string[] rowName = { process.Id.ToString(),  process.ProcessName, (process.WorkingSet64 / 1048576).ToString() + " MB" };
+                try
+                {
+                string[] rowName = {
+                    process.Id.ToString(),
+                    process.ProcessName,
+                    (process.WorkingSet64 / 1048576).ToString() + " MB",
+                    (process.PeakWorkingSet / 1048576).ToString() + "MB",
+                    process.StartTime.ToShortTimeString(),
+                    process.TotalProcessorTime.Duration().Hours.ToString()+":"+process.TotalProcessorTime.Duration().Minutes.ToString()+":"+process.TotalProcessorTime.Duration().Seconds.ToString(),
+                    process.Threads.Count.ToString()
+                };
                 processGrid.Rows.Add(rowName);
+                } catch (Win32Exception e){
+                    MessageBox.Show(e.Message);
+                }
             }
 
         }

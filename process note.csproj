@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{5FAF17B5-D259-4745-AAD9-B51CB8BAB01D}</ProjectGuid>
+    <ProjectGuid>{988D0005-E1CD-446C-8A02-B94622F19DDF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>WindowsApplication</AssemblyName>
@@ -30,15 +30,25 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>process_note</RootNamespace>
+    <RootNamespace>Process_Note</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,7 +61,22 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ProcessNoteWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProcessNoteWindow.Designer.cs">
+      <DependentUpon>ProcessNoteWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProcessNoteWindow.resx">
+      <DependentUpon>ProcessNoteWindow.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include=".git\config" />
@@ -72,12 +97,25 @@
     <None Include=".git\logs\HEAD" />
     <None Include=".git\logs\refs\heads\master" />
     <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\objects\07\3f9d08507ddb94949b35d757b52ff8f43c0069" />
+    <None Include=".git\objects\24\f991808561bcdf957e59f552c70c69ad15b468" />
+    <None Include=".git\objects\28\8d936ff556eafed2e6ea50daf4978cd8fcbc7d" />
+    <None Include=".git\objects\2a\c92d0676562946833787acee83526e990bdda4" />
+    <None Include=".git\objects\2d\083227681bcb4d28b28bf7a7e9203abc05966d" />
+    <None Include=".git\objects\34\e4e133a9474662861d095a9738f17b0183589d" />
     <None Include=".git\objects\3b\cbe5bd51cfcf0c0130b42bf8325e0efa47ff12" />
     <None Include=".git\objects\48\aa82e7c5d52bc1e3f47ea676c6aa1290891ee6" />
+    <None Include=".git\objects\58\e17b8fd868f244bdbd3331aae4136b03a6940c" />
+    <None Include=".git\objects\5f\68b7fa0539ba64184dd10fbeb71620f755c985" />
     <None Include=".git\objects\62\0751fc8a7c77d7f58199a98095abd486ffd5e8" />
+    <None Include=".git\objects\62\add6e357082a880b59750f7ec0c5e7c128d9dd" />
     <None Include=".git\objects\6c\1cf40989f325eba710b9bccb70905c913df01a" />
+    <None Include=".git\objects\77\6c7b95f518296535271253129a01faee0e426b" />
     <None Include=".git\objects\94\0794e60f21bbcbd6a04b87b08ac92ab9303511" />
+    <None Include=".git\objects\c9\1cb079d2661a7d9078132a9ca8337172bd588e" />
     <None Include=".git\objects\cd\4e9f2352ded33636a883e462cd70f40a4301bf" />
+    <None Include=".git\objects\ce\bb7a097e87bf432ec7c0551da0f8318f2ef10c" />
+    <None Include=".git\objects\da\cbf8e86d0e7d7942f76c7354d0005dcaf0f282" />
     <None Include=".git\objects\e5\31d61ce4212144bfc99456f3e603311bbd1471" />
     <None Include=".git\objects\e6\5350e0ef4b8e1b40ea06dea547dccc1fd20d94" />
     <None Include=".git\objects\ec\f3d34ab1533fe8a894900f7cca37761073fa26" />
@@ -91,23 +129,9 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProcessNoteWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProcessNoteWindow.Designer.cs">
-      <DependentUpon>ProcessNoteWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include=".git\objects\info\" />
     <Folder Include=".git\objects\pack\" />
     <Folder Include=".git\refs\tags\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ProcessNoteWindow.resx">
-      <DependentUpon>ProcessNoteWindow.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

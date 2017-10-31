@@ -50,11 +50,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(635, 701);
+            this.button1.Location = new System.Drawing.Point(1095, 701);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 40);
+            this.button1.Size = new System.Drawing.Size(140, 40);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Get processes";
+            this.button1.Text = "Make a comment";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -64,18 +64,14 @@
             this.processGrid.Location = new System.Drawing.Point(51, 76);
             this.processGrid.Name = "processGrid";
             this.processGrid.RowTemplate.Height = 24;
-            this.processGrid.Size = new System.Drawing.Size(704, 607);
+            this.processGrid.Size = new System.Drawing.Size(1184, 607);
             this.processGrid.TabIndex = 2;
-            // 
-            // programBindingSource
-            // 
-            this.programBindingSource.DataSource = typeof(process_note.Program);
             // 
             // ProcessNoteWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 753);
+            this.ClientSize = new System.Drawing.Size(1282, 753);
             this.Controls.Add(this.processGrid);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.processes);
