@@ -18,6 +18,7 @@ namespace process_note
         {
             InitializeComponent();
             this.Text = "Running processes";
+            SelectedProcessDetails.View = View.List;
 
             loadProcesses(null, null);
             /*
@@ -49,7 +50,7 @@ namespace process_note
             {
                 try
                 {
-                    object[] rowName = {
+                    object[] rowCellDatas = {
                     process.Id.ToString(),
                     //Path.GetFileName(process.MainModule.FileName),
                     process.ProcessName,
@@ -59,7 +60,7 @@ namespace process_note
                     process.TotalProcessorTime.Duration().Hours.ToString() + " h:" + process.TotalProcessorTime.Duration().Minutes.ToString() + " m:"+process.TotalProcessorTime.Duration().Seconds.ToString() + " s",
                     process.Threads.Count.ToString()
                 };
-                    processTable.Rows.Add(rowName);
+                    processTable.Rows.Add(rowCellDatas);
                 }
                 catch (Win32Exception we)
                 {
@@ -88,7 +89,6 @@ namespace process_note
 
         }
 
-
         private void RefreshAllButton_Click(object sender, EventArgs e)
         {
             processGrid.DataSource = null;
@@ -106,24 +106,29 @@ namespace process_note
 
         }
 
-        private void Label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ProcessNoteWindow_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void processGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            SelectedProcessDetails.Items.Clear();
+            string processId = processGrid.Rows[e.RowIndex].Cells["Process ID"].Value.ToString();
+            string processName = processGrid.Rows[e.RowIndex].Cells["Process Name"].Value.ToString();
+            string processMemoryUsage = processGrid.Rows[e.RowIndex].Cells["Memory Usage"].Value.ToString();
+            string processPeakMemoryUsage = processGrid.Rows[e.RowIndex].Cells["Peak Memory Usage"].Value.ToString();
+            string processStartTime = processGrid.Rows[e.RowIndex].Cells["Process Start Time"].Value.ToString();
+            string processTime = processGrid.Rows[e.RowIndex].Cells["Process Time"].Value.ToString();
+            string processThreads = processGrid.Rows[e.RowIndex].Cells["Threads"].Value.ToString();
+
+            this.SelectedProcessDetails.Items.Add(String.Format("Process ID: {0}", processId));
+            this.SelectedProcessDetails.Items.Add(String.Format("Process Name: {0}", processName));
+            this.SelectedProcessDetails.Items.Add(String.Format("Memory Usage: {0}", processMemoryUsage));
+            this.SelectedProcessDetails.Items.Add(String.Format("Peak Memory Usage: {0}", processPeakMemoryUsage));
+            this.SelectedProcessDetails.Items.Add(String.Format("Process Start Time: {0}", processStartTime));
+            this.SelectedProcessDetails.Items.Add(String.Format("Process Time: {0}", processTime));
+            this.SelectedProcessDetails.Items.Add(String.Format("Threads: {0}", processThreads));
         }
     }
 }
