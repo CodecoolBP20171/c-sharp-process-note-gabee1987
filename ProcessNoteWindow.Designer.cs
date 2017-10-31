@@ -29,54 +29,104 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.processes = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.SaveCommentButton = new System.Windows.Forms.Button();
             this.processGrid = new System.Windows.Forms.DataGridView();
             this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.RefreshAllButton = new System.Windows.Forms.Button();
+            this.CommentBox = new System.Windows.Forms.ListView();
+            this.ProcessDetails = new System.Windows.Forms.Label();
+            this.DetailedId = new System.Windows.Forms.Label();
+            this.CloseButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.processGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // processes
+            // SaveCommentButton
             // 
-            this.processes.AutoSize = true;
-            this.processes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.processes.Location = new System.Drawing.Point(46, 32);
-            this.processes.Name = "processes";
-            this.processes.Size = new System.Drawing.Size(110, 25);
-            this.processes.TabIndex = 0;
-            this.processes.Text = "Processes:";
-            this.processes.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1095, 701);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(140, 40);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Make a comment";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.SaveCommentButton.Location = new System.Drawing.Point(894, 655);
+            this.SaveCommentButton.Name = "SaveCommentButton";
+            this.SaveCommentButton.Size = new System.Drawing.Size(140, 40);
+            this.SaveCommentButton.TabIndex = 1;
+            this.SaveCommentButton.Text = "Save comment";
+            this.SaveCommentButton.UseVisualStyleBackColor = true;
+            this.SaveCommentButton.Click += new System.EventHandler(this.SaveCommentButton_Click);
             // 
             // processGrid
             // 
+            this.processGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.processGrid.BackgroundColor = System.Drawing.SystemColors.Info;
+            this.processGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.processGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.processGrid.Location = new System.Drawing.Point(51, 76);
+            this.processGrid.GridColor = System.Drawing.SystemColors.WindowFrame;
+            this.processGrid.Location = new System.Drawing.Point(12, 12);
             this.processGrid.Name = "processGrid";
+            this.processGrid.RowHeadersVisible = false;
+            this.processGrid.RowHeadersWidth = 30;
             this.processGrid.RowTemplate.Height = 24;
-            this.processGrid.Size = new System.Drawing.Size(1184, 607);
+            this.processGrid.Size = new System.Drawing.Size(873, 683);
             this.processGrid.TabIndex = 2;
+            // 
+            // RefreshAllButton
+            // 
+            this.RefreshAllButton.Location = new System.Drawing.Point(894, 12);
+            this.RefreshAllButton.Name = "RefreshAllButton";
+            this.RefreshAllButton.Size = new System.Drawing.Size(140, 40);
+            this.RefreshAllButton.TabIndex = 3;
+            this.RefreshAllButton.Text = "Refresh All";
+            this.RefreshAllButton.UseVisualStyleBackColor = true;
+            this.RefreshAllButton.Click += new System.EventHandler(this.RefreshAllButton_Click);
+            // 
+            // CommentBox
+            // 
+            this.CommentBox.Location = new System.Drawing.Point(894, 512);
+            this.CommentBox.Name = "CommentBox";
+            this.CommentBox.Size = new System.Drawing.Size(344, 125);
+            this.CommentBox.TabIndex = 4;
+            this.CommentBox.UseCompatibleStateImageBehavior = false;
+            // 
+            // ProcessDetails
+            // 
+            this.ProcessDetails.AutoSize = true;
+            this.ProcessDetails.Location = new System.Drawing.Point(891, 70);
+            this.ProcessDetails.Name = "ProcessDetails";
+            this.ProcessDetails.Size = new System.Drawing.Size(118, 17);
+            this.ProcessDetails.TabIndex = 5;
+            this.ProcessDetails.Text = "Selected Process";
+            // 
+            // DetailedId
+            // 
+            this.DetailedId.AutoSize = true;
+            this.DetailedId.Location = new System.Drawing.Point(891, 104);
+            this.DetailedId.Name = "DetailedId";
+            this.DetailedId.Size = new System.Drawing.Size(46, 17);
+            this.DetailedId.TabIndex = 6;
+            this.DetailedId.Text = "label2";
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(1098, 655);
+            this.CloseButton.Name = "CloseButton";
+            this.CloseButton.Size = new System.Drawing.Size(140, 40);
+            this.CloseButton.TabIndex = 7;
+            this.CloseButton.Text = "Close";
+            this.CloseButton.UseVisualStyleBackColor = true;
+            this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
             // 
             // ProcessNoteWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1282, 753);
+            this.ClientSize = new System.Drawing.Size(1250, 711);
+            this.Controls.Add(this.CloseButton);
+            this.Controls.Add(this.DetailedId);
+            this.Controls.Add(this.ProcessDetails);
+            this.Controls.Add(this.CommentBox);
+            this.Controls.Add(this.RefreshAllButton);
             this.Controls.Add(this.processGrid);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.processes);
+            this.Controls.Add(this.SaveCommentButton);
             this.Name = "ProcessNoteWindow";
             this.Text = "                  ";
+            this.Load += new System.EventHandler(this.ProcessNoteWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.processGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -85,10 +135,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label processes;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button SaveCommentButton;
         private System.Windows.Forms.BindingSource programBindingSource;
         private System.Windows.Forms.DataGridView processGrid;
+        private System.Windows.Forms.Button RefreshAllButton;
+        private System.Windows.Forms.ListView CommentBox;
+        private System.Windows.Forms.Label ProcessDetails;
+        private System.Windows.Forms.Label DetailedId;
+        private System.Windows.Forms.Button CloseButton;
     }
 }

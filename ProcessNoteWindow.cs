@@ -17,79 +17,111 @@ namespace process_note
         public ProcessNoteWindow()
         {
             InitializeComponent();
-            loadProcesses();   
+            this.Text = "Running processes";
+
+            loadProcesses(null, null);
+            /*
+            Timer ticker = new Timer();
+            ticker.Interval = 250;
+            ticker.Tick += loadProcesses;
+            ticker.Start();
+            */
         }
 
-        private void loadProcesses()
+        void loadProcesses(object sender, EventArgs e)
         {
+            BindingSource source = new BindingSource();
+            var processTable = new DataTable("Process List");
 
-            Process[] localAll = null;
-            try
-            {
-                localAll = Process.GetProcesses();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                Application.Exit();
-                return;
-            }
+            Process[] localProcesses = Process.GetProcesses();
 
-            int threadscount = 0;
+            
+            processTable.Columns.Add("Process ID");
+            //processTable.Columns.Add("Application name");
+            processTable.Columns.Add("Process Name");
+            processTable.Columns.Add("Memory Usage");
+            processTable.Columns.Add("Peak Memory Usage");
+            processTable.Columns.Add("Process Start Time");
+            processTable.Columns.Add("Process Time");
+            processTable.Columns.Add("Threads");
 
-            processGrid.ColumnCount = 7;
-            processGrid.Columns[0].Name = "Process ID";
-            processGrid.Columns[1].Name = "Process Name";
-            processGrid.Columns[2].Name = "Memory Usage";
-            processGrid.Columns[3].Name = "Peak Memory Usage";
-            processGrid.Columns[4].Name = "Process Start Time";
-            processGrid.Columns[5].Name = "Process Time";
-            processGrid.Columns[6].Name = "Threads";
-
-
-
-
-
-
-            foreach (var process in localAll)
+            foreach (var process in localProcesses)
             {
                 try
                 {
-                string[] rowName = {
+                    object[] rowName = {
                     process.Id.ToString(),
+                    //Path.GetFileName(process.MainModule.FileName),
                     process.ProcessName,
                     (process.WorkingSet64 / 1048576).ToString() + " MB",
-                    (process.PeakWorkingSet / 1048576).ToString() + "MB",
+                    (process.PeakWorkingSet64 / 1048576).ToString() + " MB",
                     process.StartTime.ToShortTimeString(),
-                    process.TotalProcessorTime.Duration().Hours.ToString()+":"+process.TotalProcessorTime.Duration().Minutes.ToString()+":"+process.TotalProcessorTime.Duration().Seconds.ToString(),
+                    process.TotalProcessorTime.Duration().Hours.ToString() + " h:" + process.TotalProcessorTime.Duration().Minutes.ToString() + " m:"+process.TotalProcessorTime.Duration().Seconds.ToString() + " s",
                     process.Threads.Count.ToString()
                 };
-                processGrid.Rows.Add(rowName);
-                } catch (Win32Exception e){
-                    MessageBox.Show(e.Message);
+                    processTable.Rows.Add(rowName);
+                }
+                catch (Win32Exception we)
+                {
+                    //MessageBox.Show(we.Message);
                 }
             }
+            processTable.AcceptChanges();
+            source.DataSource = processTable;
+            processGrid.DataSource = source;
+
+            DataGridViewColumn processIdColumn = processGrid.Columns[0];
+            DataGridViewColumn processNameColumn = processGrid.Columns[1];
+            DataGridViewColumn processMemoryUsageColumn = processGrid.Columns[2];
+            DataGridViewColumn processPeakMemoryUsageColumn = processGrid.Columns[3];
+            DataGridViewColumn processStartTimeColumn = processGrid.Columns[4];
+            DataGridViewColumn processTimeColumn = processGrid.Columns[5];
+            DataGridViewColumn threadsColumn = processGrid.Columns[6];
+
+            processIdColumn.FillWeight = 40;
+            processNameColumn.FillWeight = 100;
+            processMemoryUsageColumn.FillWeight = 50;
+            processPeakMemoryUsageColumn.FillWeight = 50;
+            processStartTimeColumn.FillWeight = 50;
+            processTimeColumn.FillWeight = 50;
+            threadsColumn.FillWeight = 30;
 
         }
 
-        
 
-        private void button1_Click(object sender, EventArgs e)
+        private void RefreshAllButton_Click(object sender, EventArgs e)
+        {
+            processGrid.DataSource = null;
+            //processGrid.Refresh();
+            loadProcesses(null, null);
+        }
+
+        private void SaveCommentButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void CloseButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void Label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProcessNoteWindow_Load(object sender, EventArgs e)
         {
 
         }
