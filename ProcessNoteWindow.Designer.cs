@@ -85,9 +85,10 @@
             // ProcessDetails
             // 
             this.ProcessDetails.AutoSize = true;
+            this.ProcessDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ProcessDetails.Location = new System.Drawing.Point(891, 90);
             this.ProcessDetails.Name = "ProcessDetails";
-            this.ProcessDetails.Size = new System.Drawing.Size(118, 17);
+            this.ProcessDetails.Size = new System.Drawing.Size(173, 24);
             this.ProcessDetails.TabIndex = 5;
             this.ProcessDetails.Text = "Selected Process";
             // 
@@ -105,10 +106,11 @@
             // 
             this.SelectedProcessDetails.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.SelectedProcessDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.SelectedProcessDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.SelectedProcessDetails.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.SelectedProcessDetails.Location = new System.Drawing.Point(894, 110);
+            this.SelectedProcessDetails.Location = new System.Drawing.Point(894, 118);
             this.SelectedProcessDetails.Name = "SelectedProcessDetails";
-            this.SelectedProcessDetails.Size = new System.Drawing.Size(344, 168);
+            this.SelectedProcessDetails.Size = new System.Drawing.Size(344, 292);
             this.SelectedProcessDetails.TabIndex = 8;
             this.SelectedProcessDetails.UseCompatibleStateImageBehavior = false;
             // 
