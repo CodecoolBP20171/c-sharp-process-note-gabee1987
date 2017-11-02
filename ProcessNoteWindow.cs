@@ -14,6 +14,9 @@ namespace process_note
 {
     public partial class ProcessNoteWindow : Form
     {
+        private int selectedProcessId;
+        private Dictionary<int, string> savedCommentsDict = new Dictionary<int, string>();
+
         public ProcessNoteWindow()
         {
             InitializeComponent();
@@ -21,12 +24,6 @@ namespace process_note
             SelectedProcessDetails.View = View.List;
 
             loadProcesses(null, null);
-            /*
-            Timer ticker = new Timer();
-            ticker.Interval = 250;
-            ticker.Tick += loadProcesses;
-            ticker.Start();
-            */
         }
 
         void loadProcesses(object sender, EventArgs e)
@@ -38,7 +35,6 @@ namespace process_note
 
             
             processTable.Columns.Add("Process ID");
-            //processTable.Columns.Add("Application name");
             processTable.Columns.Add("Process Name");
             processTable.Columns.Add("Memory Usage");
             processTable.Columns.Add("Peak Memory Usage");
@@ -52,7 +48,6 @@ namespace process_note
                 {
                     object[] rowCellDatas = {
                     process.Id.ToString(),
-                    //Path.GetFileName(process.MainModule.FileName),
                     process.ProcessName,
                     (process.WorkingSet64 / 1048576).ToString() + " MB",
                     (process.PeakWorkingSet64 / 1048576).ToString() + " MB",
@@ -64,7 +59,6 @@ namespace process_note
                 }
                 catch (Win32Exception we)
                 {
-                    //MessageBox.Show(we.Message);
                 }
             }
             processTable.AcceptChanges();
@@ -96,14 +90,46 @@ namespace process_note
             loadProcesses(null, null);
         }
 
+        private void RefreshSelectedButton_Click(object sender, EventArgs e)
+        {
+            Process selectedProcess = Process.GetProcessById(selectedProcessId);
+            selectedProcess.Refresh();
+
+            string selectedProcessID = selectedProcess.Id.ToString();
+            string selectedProcessName = selectedProcess.ProcessName;
+            string selectedProcessMemoryUsage = (selectedProcess.WorkingSet64 / 1048576).ToString() + " MB";
+            string selectedProcessPeakMemoryUsage = (selectedProcess.PeakWorkingSet64 / 1048576).ToString() + " MB";
+            string selectedProcessStartTime = selectedProcess.StartTime.ToShortTimeString();
+            string selectedProcessTime = selectedProcess.TotalProcessorTime.Duration().Hours.ToString() + " h:" + selectedProcess.TotalProcessorTime.Duration().Minutes.ToString() + " m:" + selectedProcess.TotalProcessorTime.Duration().Seconds.ToString() + " s";
+            string selectedProcessThreads = selectedProcess.Threads.Count.ToString();
+
+            SelectedProcessDetails.Items.Clear();
+            this.SelectedProcessDetails.Items.Add(String.Format("Process ID: {0}", selectedProcessID));
+            this.SelectedProcessDetails.Items.Add(String.Format("Process Name: {0}", selectedProcessName));
+            this.SelectedProcessDetails.Items.Add(String.Format("Memory Usage: {0}", selectedProcessMemoryUsage));
+            this.SelectedProcessDetails.Items.Add(String.Format("Peak Memory Usage: {0}", selectedProcessPeakMemoryUsage));
+            this.SelectedProcessDetails.Items.Add(String.Format("Process Start Time: {0}", selectedProcessStartTime));
+            this.SelectedProcessDetails.Items.Add(String.Format("Process Time: {0}", selectedProcessTime));
+            this.SelectedProcessDetails.Items.Add(String.Format("Threads: {0}", selectedProcessThreads));
+        }
+
         private void SaveCommentButton_Click(object sender, EventArgs e)
         {
+            string savedComment = "";
+            savedComment = this.CommentBox.Text;
+            savedCommentsDict[selectedProcessId] = savedComment;
+            SaveCommentButton.BackColor = Color.Aquamarine;
 
+        }
+
+        private void CommentBox_TextChanged(object sender, EventArgs e)
+        {
+            SaveCommentButton.BackColor = Color.LightSalmon;
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void ProcessNoteWindow_Load(object sender, EventArgs e)
@@ -111,9 +137,10 @@ namespace process_note
 
         }
 
-        private void processGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void processGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             SelectedProcessDetails.Items.Clear();
+            selectedProcessId = Convert.ToInt32(processGrid.Rows[e.RowIndex].Cells["Process ID"].Value);
             string processId = processGrid.Rows[e.RowIndex].Cells["Process ID"].Value.ToString();
             string processName = processGrid.Rows[e.RowIndex].Cells["Process Name"].Value.ToString();
             string processMemoryUsage = processGrid.Rows[e.RowIndex].Cells["Memory Usage"].Value.ToString();
@@ -129,6 +156,25 @@ namespace process_note
             this.SelectedProcessDetails.Items.Add(String.Format("Process Start Time: {0}", processStartTime));
             this.SelectedProcessDetails.Items.Add(String.Format("Process Time: {0}", processTime));
             this.SelectedProcessDetails.Items.Add(String.Format("Threads: {0}", processThreads));
+
+            string selectedProcessComment;
+            try
+            {
+                bool hasValue = savedCommentsDict.TryGetValue(selectedProcessId, out selectedProcessComment);
+                if (hasValue)
+                {
+                    CommentBox.Text = selectedProcessComment;
+                }
+                else
+                {
+                    CommentBox.Text = String.Empty;
+                }
+            } catch
+            {
+
+            }
+
+            SaveCommentButton.BackColor = DefaultBackColor;
         }
     }
 }

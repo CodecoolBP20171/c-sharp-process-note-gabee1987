@@ -36,19 +36,21 @@
             this.ProcessDetails = new System.Windows.Forms.Label();
             this.CloseButton = new System.Windows.Forms.Button();
             this.SelectedProcessDetails = new System.Windows.Forms.ListView();
-            this.CommentBox = new System.Windows.Forms.RichTextBox();
+            this.RefreshSelectedButton = new System.Windows.Forms.Button();
+            this.CommentBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.processGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // SaveCommentButton
             // 
+            this.SaveCommentButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.SaveCommentButton.Location = new System.Drawing.Point(894, 655);
             this.SaveCommentButton.Name = "SaveCommentButton";
             this.SaveCommentButton.Size = new System.Drawing.Size(140, 40);
             this.SaveCommentButton.TabIndex = 1;
             this.SaveCommentButton.Text = "Save comment";
-            this.SaveCommentButton.UseVisualStyleBackColor = true;
+            this.SaveCommentButton.UseVisualStyleBackColor = false;
             this.SaveCommentButton.Click += new System.EventHandler(this.SaveCommentButton_Click);
             // 
             // processGrid
@@ -65,7 +67,7 @@
             this.processGrid.RowTemplate.Height = 24;
             this.processGrid.Size = new System.Drawing.Size(873, 683);
             this.processGrid.TabIndex = 2;
-            this.processGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.processGrid_CellClick);
+            this.processGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.processGrid_CellMouseDoubleClick);
             // 
             // RefreshAllButton
             // 
@@ -107,14 +109,24 @@
             this.SelectedProcessDetails.TabIndex = 8;
             this.SelectedProcessDetails.UseCompatibleStateImageBehavior = false;
             // 
+            // RefreshSelectedButton
+            // 
+            this.RefreshSelectedButton.Location = new System.Drawing.Point(1098, 12);
+            this.RefreshSelectedButton.Name = "RefreshSelectedButton";
+            this.RefreshSelectedButton.Size = new System.Drawing.Size(140, 40);
+            this.RefreshSelectedButton.TabIndex = 10;
+            this.RefreshSelectedButton.Text = "Refresh Selected";
+            this.RefreshSelectedButton.UseVisualStyleBackColor = true;
+            this.RefreshSelectedButton.Click += new System.EventHandler(this.RefreshSelectedButton_Click);
+            // 
             // CommentBox
             // 
-            this.CommentBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CommentBox.Location = new System.Drawing.Point(894, 274);
+            this.CommentBox.Location = new System.Drawing.Point(894, 478);
+            this.CommentBox.Multiline = true;
             this.CommentBox.Name = "CommentBox";
-            this.CommentBox.Size = new System.Drawing.Size(344, 363);
-            this.CommentBox.TabIndex = 9;
-            this.CommentBox.Text = "";
+            this.CommentBox.Size = new System.Drawing.Size(344, 162);
+            this.CommentBox.TabIndex = 11;
+            this.CommentBox.TextChanged += new System.EventHandler(this.CommentBox_TextChanged);
             // 
             // ProcessNoteWindow
             // 
@@ -122,6 +134,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1250, 711);
             this.Controls.Add(this.CommentBox);
+            this.Controls.Add(this.RefreshSelectedButton);
             this.Controls.Add(this.SelectedProcessDetails);
             this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.ProcessDetails);
@@ -146,6 +159,7 @@
         private System.Windows.Forms.Label ProcessDetails;
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.ListView SelectedProcessDetails;
-        private System.Windows.Forms.RichTextBox CommentBox;
+        private System.Windows.Forms.Button RefreshSelectedButton;
+        private System.Windows.Forms.TextBox CommentBox;
     }
 }
