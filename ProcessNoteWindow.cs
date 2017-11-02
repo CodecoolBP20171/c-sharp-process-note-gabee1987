@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace process_note
 {
@@ -36,8 +37,8 @@ namespace process_note
             
             processTable.Columns.Add("Process ID");
             processTable.Columns.Add("Process Name");
-            processTable.Columns.Add("Memory Usage");
-            processTable.Columns.Add("Peak Memory Usage");
+            processTable.Columns.Add("Memory Usage (MB)");
+            processTable.Columns.Add("Peak Memory Usage (MB)");
             processTable.Columns.Add("Process Start Time");
             processTable.Columns.Add("Process Time");
             processTable.Columns.Add("Threads");
@@ -49,8 +50,8 @@ namespace process_note
                     object[] rowCellDatas = {
                     process.Id.ToString(),
                     process.ProcessName,
-                    (process.WorkingSet64 / 1048576).ToString() + " MB",
-                    (process.PeakWorkingSet64 / 1048576).ToString() + " MB",
+                    (process.WorkingSet64 / 1048576),
+                    (process.PeakWorkingSet64 / 1048576),
                     process.StartTime.ToShortTimeString(),
                     process.TotalProcessorTime.Duration().Hours.ToString() + " h:" + process.TotalProcessorTime.Duration().Minutes.ToString() + " m:"+process.TotalProcessorTime.Duration().Seconds.ToString() + " s",
                     process.Threads.Count.ToString()
@@ -143,15 +144,15 @@ namespace process_note
             selectedProcessId = Convert.ToInt32(processGrid.Rows[e.RowIndex].Cells["Process ID"].Value);
             string processId = processGrid.Rows[e.RowIndex].Cells["Process ID"].Value.ToString();
             string processName = processGrid.Rows[e.RowIndex].Cells["Process Name"].Value.ToString();
-            string processMemoryUsage = processGrid.Rows[e.RowIndex].Cells["Memory Usage"].Value.ToString();
-            string processPeakMemoryUsage = processGrid.Rows[e.RowIndex].Cells["Peak Memory Usage"].Value.ToString();
+            string processMemoryUsage = processGrid.Rows[e.RowIndex].Cells["Memory Usage (MB)"].Value.ToString();
+            string processPeakMemoryUsage = processGrid.Rows[e.RowIndex].Cells["Peak Memory Usage (MB)"].Value.ToString();
             string processStartTime = processGrid.Rows[e.RowIndex].Cells["Process Start Time"].Value.ToString();
             string processTime = processGrid.Rows[e.RowIndex].Cells["Process Time"].Value.ToString();
             string processThreads = processGrid.Rows[e.RowIndex].Cells["Threads"].Value.ToString();
 
             this.SelectedProcessDetails.Items.Add(String.Format("Process ID: {0}", processId));
             this.SelectedProcessDetails.Items.Add(String.Format("Process Name: {0}", processName));
-            this.SelectedProcessDetails.Items.Add(String.Format("Memory Usage: {0}", processMemoryUsage));
+            this.SelectedProcessDetails.Items.Add(String.Format("Memory Usage (MB): {0}", processMemoryUsage));
             this.SelectedProcessDetails.Items.Add(String.Format("Peak Memory Usage: {0}", processPeakMemoryUsage));
             this.SelectedProcessDetails.Items.Add(String.Format("Process Start Time: {0}", processStartTime));
             this.SelectedProcessDetails.Items.Add(String.Format("Process Time: {0}", processTime));
@@ -175,6 +176,47 @@ namespace process_note
             }
 
             SaveCommentButton.BackColor = DefaultBackColor;
+        }
+
+        private void AlwaysOnTop_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = this.AlwaysOnTop.Checked;
+        }
+
+        private void processGrid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (processGrid.Columns[e.ColumnIndex].Name.Equals("Memory Usage (MB)"))
+            {
+                Int32 intLowValue;
+                if (Int32.TryParse((String)e.Value, out intLowValue) && (intLowValue > 50))
+                {
+                    e.CellStyle.BackColor = Color.Moccasin;
+                }
+            }
+            if (processGrid.Columns[e.ColumnIndex].Name.Equals("Memory Usage (MB)"))
+            {
+                Int32 intMediumValue;
+                if (Int32.TryParse((String)e.Value, out intMediumValue) && (intMediumValue > 100))
+                {
+                    e.CellStyle.BackColor = Color.Orange;
+                }
+            }
+            if (processGrid.Columns[e.ColumnIndex].Name.Equals("Memory Usage (MB)"))
+            {
+                Int32 intHighValue;
+                if (Int32.TryParse((String)e.Value, out intHighValue) && (intHighValue > 150))
+                {
+                    e.CellStyle.BackColor = Color.LightSalmon;
+                }
+            }
+            if (processGrid.Columns[e.ColumnIndex].Name.Equals("Memory Usage (MB)"))
+            {
+                Int32 intVeryHighValue;
+                if (Int32.TryParse((String)e.Value, out intVeryHighValue) && (intVeryHighValue > 200))
+                {
+                    e.CellStyle.BackColor = Color.OrangeRed;
+                }
+            }
         }
     }
 }

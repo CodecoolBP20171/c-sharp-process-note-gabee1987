@@ -38,6 +38,7 @@
             this.SelectedProcessDetails = new System.Windows.Forms.ListView();
             this.RefreshSelectedButton = new System.Windows.Forms.Button();
             this.CommentBox = new System.Windows.Forms.TextBox();
+            this.AlwaysOnTop = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.processGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -65,13 +66,15 @@
             this.processGrid.RowHeadersVisible = false;
             this.processGrid.RowHeadersWidth = 30;
             this.processGrid.RowTemplate.Height = 24;
+            this.processGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.processGrid.Size = new System.Drawing.Size(873, 683);
             this.processGrid.TabIndex = 2;
+            this.processGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.processGrid_CellFormatting);
             this.processGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.processGrid_CellMouseDoubleClick);
             // 
             // RefreshAllButton
             // 
-            this.RefreshAllButton.Location = new System.Drawing.Point(894, 12);
+            this.RefreshAllButton.Location = new System.Drawing.Point(894, 47);
             this.RefreshAllButton.Name = "RefreshAllButton";
             this.RefreshAllButton.Size = new System.Drawing.Size(140, 40);
             this.RefreshAllButton.TabIndex = 3;
@@ -82,7 +85,7 @@
             // ProcessDetails
             // 
             this.ProcessDetails.AutoSize = true;
-            this.ProcessDetails.Location = new System.Drawing.Point(891, 70);
+            this.ProcessDetails.Location = new System.Drawing.Point(891, 90);
             this.ProcessDetails.Name = "ProcessDetails";
             this.ProcessDetails.Size = new System.Drawing.Size(118, 17);
             this.ProcessDetails.TabIndex = 5;
@@ -103,7 +106,7 @@
             this.SelectedProcessDetails.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.SelectedProcessDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.SelectedProcessDetails.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.SelectedProcessDetails.Location = new System.Drawing.Point(894, 100);
+            this.SelectedProcessDetails.Location = new System.Drawing.Point(894, 110);
             this.SelectedProcessDetails.Name = "SelectedProcessDetails";
             this.SelectedProcessDetails.Size = new System.Drawing.Size(344, 168);
             this.SelectedProcessDetails.TabIndex = 8;
@@ -111,7 +114,7 @@
             // 
             // RefreshSelectedButton
             // 
-            this.RefreshSelectedButton.Location = new System.Drawing.Point(1098, 12);
+            this.RefreshSelectedButton.Location = new System.Drawing.Point(1098, 47);
             this.RefreshSelectedButton.Name = "RefreshSelectedButton";
             this.RefreshSelectedButton.Size = new System.Drawing.Size(140, 40);
             this.RefreshSelectedButton.TabIndex = 10;
@@ -128,11 +131,23 @@
             this.CommentBox.TabIndex = 11;
             this.CommentBox.TextChanged += new System.EventHandler(this.CommentBox_TextChanged);
             // 
+            // AlwaysOnTop
+            // 
+            this.AlwaysOnTop.AutoSize = true;
+            this.AlwaysOnTop.Location = new System.Drawing.Point(1113, 20);
+            this.AlwaysOnTop.Name = "AlwaysOnTop";
+            this.AlwaysOnTop.Size = new System.Drawing.Size(125, 21);
+            this.AlwaysOnTop.TabIndex = 12;
+            this.AlwaysOnTop.Text = "Always On Top";
+            this.AlwaysOnTop.UseVisualStyleBackColor = true;
+            this.AlwaysOnTop.CheckedChanged += new System.EventHandler(this.AlwaysOnTop_CheckedChanged);
+            // 
             // ProcessNoteWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1250, 711);
+            this.Controls.Add(this.AlwaysOnTop);
             this.Controls.Add(this.CommentBox);
             this.Controls.Add(this.RefreshSelectedButton);
             this.Controls.Add(this.SelectedProcessDetails);
@@ -161,5 +176,6 @@
         private System.Windows.Forms.ListView SelectedProcessDetails;
         private System.Windows.Forms.Button RefreshSelectedButton;
         private System.Windows.Forms.TextBox CommentBox;
+        private System.Windows.Forms.CheckBox AlwaysOnTop;
     }
 }
