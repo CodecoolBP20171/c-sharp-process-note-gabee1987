@@ -149,6 +149,7 @@ namespace process_note
             string processStartTime = processGrid.Rows[e.RowIndex].Cells["Process Start Time"].Value.ToString();
             string processTime = processGrid.Rows[e.RowIndex].Cells["Process Time"].Value.ToString();
             string processThreads = processGrid.Rows[e.RowIndex].Cells["Threads"].Value.ToString();
+            //string CPUusage = getCurrentCpuUsage(cpuCounter);
 
             this.SelectedProcessDetails.Items.Add(String.Format("Process ID: {0}", processId));
             this.SelectedProcessDetails.Items.Add(String.Format("Process Name: {0}", processName));
@@ -157,6 +158,8 @@ namespace process_note
             this.SelectedProcessDetails.Items.Add(String.Format("Process Start Time: {0}", processStartTime));
             this.SelectedProcessDetails.Items.Add(String.Format("Process Time: {0}", processTime));
             this.SelectedProcessDetails.Items.Add(String.Format("Threads: {0}", processThreads));
+            //this.SelectedProcessDetails.Items.Add(String.Format("CPU Usage: {0}", CPUusage));
+
 
             string selectedProcessComment;
             try
@@ -222,5 +225,12 @@ namespace process_note
                 }
             }
         }
+
+        /*
+        public string getCurrentCpuUsage(PerformanceCounter cpuCounter)
+        {
+            return cpuCounter.NextValue() + "%";
+        }
+        */
     }
 }
